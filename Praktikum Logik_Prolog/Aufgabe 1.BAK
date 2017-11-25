@@ -1,0 +1,16 @@
+% Autor: Mike Wustenberg
+% Datum: 17.11.2017
+
+
+% Mannlich
+
+maennlich(peter).
+maennlich(hans).
+
+% Weiblich
+weiblich(sofie).
+
+% Eltern
+eltern(hans, peter).
+eltern(hans, sofie).
+
