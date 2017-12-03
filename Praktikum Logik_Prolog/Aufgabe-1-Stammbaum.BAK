@@ -52,8 +52,8 @@ elternteile(oddo, edda).
 elternteile(sofie, tane).
 elternteile(sofie, gaby).
 
-elternteile(cali, tane).
-elternteile(cali, gaby).
+elternteile(sofie, tane).
+elternteile(sofie, gaby).
 
 % Verheiratet
 verheiratet(peter, sofie).

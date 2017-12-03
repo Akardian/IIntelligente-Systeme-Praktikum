@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350) (preloaded format=pdflatex 2017.10.3)  25 NOV 2017 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350) (preloaded format=pdflatex 2017.10.3)  3 DEC 2017 13:44
 entering extended mode
 **"D:/GIT/Intelligente-Systeme-Praktikum/Praktikum Logik_Prolog/stambaum.tex"
 ("D:/GIT/Intelligente-Systeme-Praktikum/Praktikum Logik_Prolog/stambaum.tex"
@@ -468,16 +468,16 @@ G,.JBIG2,.JB2,.eps]
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
 * driver: pdftex
-* paper: letterpaper
+* paper: a3paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: landscape 
-* h-part:(L,W,R)=(144.54pt, 505.89pt, 144.54pt)
-* v-part:(T,H,B)=(144.54pt, 325.21501pt, 144.54pt)
-* \paperwidth=794.96999pt
-* \paperheight=614.295pt
-* \textwidth=505.89pt
-* \textheight=325.21501pt
+* h-part:(L,W,R)=(144.54pt, 905.93576pt, 144.54pt)
+* v-part:(T,H,B)=(144.54pt, 555.96686pt, 144.54pt)
+* \paperwidth=1195.01575pt
+* \paperheight=845.04684pt
+* \textwidth=905.93576pt
+* \textheight=555.96686pt
 * \oddsidemargin=72.27pt
 * \evensidemargin=72.27pt
 * \topmargin=35.27pt
@@ -502,21 +502,16 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 13.
-
-Overfull \hbox (32.19603pt too wide) in paragraph at lines 39--40
-[][] 
- []
-
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 ("D:\GIT\Intelligente-Systeme-Praktikum\Praktikum Logik_Prolog\build\stambaum.a
 ux") ) 
 Here is how much of TeX's memory you used:
- 13052 strings out of 493323
- 277594 string characters out of 3136471
- 322542 words of memory out of 3000000
- 16370 multiletter control sequences out of 15000+200000
+ 13097 strings out of 493323
+ 278119 string characters out of 3136471
+ 331372 words of memory out of 3000000
+ 16415 multiletter control sequences out of 15000+200000
  3640 words of font info for 14 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,8n,68p,469b,738s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -524,7 +519,7 @@ Here is how much of TeX's memory you used:
 pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 ><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
 Output written on "D:\GIT\Intelligente-Systeme-Praktikum\Praktikum Logik_Prolog
-\build\stambaum.pdf" (1 page, 35423 bytes).
+\build\stambaum.pdf" (1 page, 35191 bytes).
 PDF statistics:
  21 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
