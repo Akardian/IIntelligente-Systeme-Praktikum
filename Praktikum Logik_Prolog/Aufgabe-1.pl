@@ -65,3 +65,6 @@ groszeltern(X, Groszeltern) :- elternteile(X, Eltern), elternteile(Eltern, Grosz
 groszTanteOnkel(X, GroszTanteOnkel) :- groszeltern(X, Groszeltern), alleGeschwister(Groszeltern, GroszTanteOnkel).
 groszOnkel(X, GroszOnkel) :-  groszTanteOnkel(X, GroszOnkel), maennlich(GroszOnkel).
 groszTante(X, GroszTante) :- groszTanteOnkel(X, GroszTante), weiblich(GroszTante).
+
+mnot(X) :- call(X),!,fail.
+mnot(_) :- true.
