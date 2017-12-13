@@ -1,5 +1,5 @@
 package environment;
 
 public enum Direction {
-	NORTH,EAST,SOUTH,WEST
+	NORTH,EAST_,SOUTH,WEST_
 }

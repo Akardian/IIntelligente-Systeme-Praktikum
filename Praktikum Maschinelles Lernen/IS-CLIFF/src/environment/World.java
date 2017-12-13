@@ -9,12 +9,11 @@ import exceptions.WorldToSmall;
 public class World {
 
 	private Tile[][] tile;	
-	private Position startPossition;
 	//0 > Sum < 100  
 	private final int moveForward = 100;
 	private final int moveRight = 0;
 	private final int moveLeft = 0;
-	private final int moveBackwards = 0;
+	private final int moveBackwards = 00;
 	//
 	private final int achseX;
 	private final int achseY;
@@ -25,7 +24,6 @@ public class World {
 			this.achseY = achseY;
 
 			createWorld(rewardBad, rewardGood);
-			startPossition = new Position(0, achseY-1);
 		} else {
 			throw new WorldToSmall("ERROR: World to small.");
 		}
@@ -56,6 +54,15 @@ public class World {
 				} else {
 					tile[j][i].print();
 				}
+			}
+			System.out.println();
+		}
+	}
+	
+	public void printc() {
+		for (int i = 0; i < achseY; i++) {
+			for (int j = 0; j < achseX; j++) {
+					tile[j][i].printC();				
 			}
 			System.out.println();
 		}
@@ -108,6 +115,10 @@ public class World {
 	
 	public Tile[][] getTile() {
 		return tile;
+	}
+	
+	public Tile getTile(Position position) {
+		return tile[position.getX()][position.getY()];
 	}
 
 	@Override

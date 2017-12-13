@@ -1,7 +1,8 @@
 package environment;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Tile {
 
@@ -9,7 +10,7 @@ public class Tile {
 	private final Position position;
 	private final int reward;
 
-	private ArrayList<Action> actionList;
+	private Map<Direction, Action> actionMap;
 	private TileType type;
 
 	public Tile(int x, int y, TileType type, int reward) {
@@ -19,45 +20,44 @@ public class Tile {
 
 		name = "Tile_X" + x + "_Y" + y;
 
-		actionList = new ArrayList<>();
-		actionList.add(new Action(Direction.NORTH));
-		actionList.add(new Action(Direction.EAST));
-		actionList.add(new Action(Direction.SOUTH));
-		actionList.add(new Action(Direction.WEST));
+		actionMap = new HashMap<>();
+		actionMap.put(Direction.NORTH, new Action(Direction.NORTH));
+		actionMap.put(Direction.EAST_, new Action(Direction.EAST_));
+		actionMap.put(Direction.SOUTH, new Action(Direction.SOUTH));
+		actionMap.put(Direction.WEST_, new Action(Direction.WEST_));
 	}
 
 	public Action getMaxQValue() {
 		Action maxQValue = null;
-		for (int i = 0; i < actionList.size(); i++) {
+		for (Entry<Direction, Action> entry : actionMap.entrySet()) {
 			if (maxQValue == null) {
-				maxQValue = actionList.get(i);
-			} else if (actionList.get(i).getQValue() > maxQValue.getQValue()) {
-				maxQValue = actionList.get(i);
+				maxQValue = entry.getValue();
+			} else if (entry.getValue().getQValue() > maxQValue.getQValue()) {
+				maxQValue = entry.getValue();
 			}
 		}
-
 		return maxQValue;
 	}
-	
+
 	public void setQValue(Direction direction, double qValue) {
-		for (int i = 0; i < actionList.size(); i++) {
-			if (actionList.get(i).getDirection() == direction) {
-				actionList.get(i).setQValue(qValue);
-			}
-		}
+		actionMap.get(direction).setQValue(qValue);
 	}
 
 	public void print() {
 		if (type == TileType.EMPTY) {
-			System.out.printf("[(O)" + name + " N(%+.2f) E(%+.2f) S(%+.2f) W(%+.2f)] ", actionList.get(0).getQValue(),
-					actionList.get(1).getQValue(), actionList.get(2).getQValue(), actionList.get(3).getQValue());
+			System.out.printf("{[O][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
+					position.getX(), position.getY(),
+					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
 		} else if (type == TileType.CLIFF) {
-			System.out.printf("[(O)-------------------CLIFF-----------------] ");
+			System.out.printf("[(O)---------------------CLIFF------------------] ");
 		} else if (type == TileType.START) {
-			System.out.printf("[(O)" + name + " N(%+.2f) E(%+.2f) S(%+.2f) W(%+.2f)] ", actionList.get(0).getQValue(),
-					actionList.get(1).getQValue(), actionList.get(2).getQValue(), actionList.get(3).getQValue());
+			System.out.printf("{[O][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
+					position.getX(), position.getY(),
+					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
 		} else if (type == TileType.END) {
-			System.out.printf("[(O)--------------------END------------------] ");
+			System.out.printf("[(O)----------------------END-------------------] ");
 		} else {
 			System.out.println("ERROR: No Tile Type.");
 		}
@@ -65,15 +65,19 @@ public class Tile {
 
 	public void printf() {
 		if (type == TileType.EMPTY) {
-			System.out.printf("[(X)" + name + " N(%+.2f) E(%+.2f) S(%+.2f) W(%+.2f)] ", actionList.get(0).getQValue(),
-					actionList.get(1).getQValue(), actionList.get(2).getQValue(), actionList.get(3).getQValue());
+			System.out.printf("{[X][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
+					position.getX(), position.getY(),
+					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
 		} else if (type == TileType.CLIFF) {
-			System.out.printf("[(X)-------------------CLIFF-----------------] ");
+			System.out.printf("[(X)---------------------CLIFF------------------] ");
 		} else if (type == TileType.START) {
-			System.out.printf("[(X)" + name + " N(%+.2f) E(%+.2f) S(%+.2f) W(%+.2f)] ", actionList.get(0).getQValue(),
-					actionList.get(1).getQValue(), actionList.get(2).getQValue(), actionList.get(3).getQValue());
+			System.out.printf("{[X][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
+					position.getX(), position.getY(),
+					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
 		} else if (type == TileType.END) {
-			System.out.printf("[(X)--------------------END------------------] ");
+			System.out.printf("[(X)----------------------END-------------------] ");
 		} else {
 			System.out.println("ERROR: No Tile Type.");
 		}
@@ -81,7 +85,7 @@ public class Tile {
 
 	@Override
 	public String toString() {
-		return "Tile [name=" + name + ", position=" + position + ", reward=" + reward + ", actionList=" + actionList
+		return "Tile [name=" + name + ", position=" + position + ", reward=" + reward + ", actionList=" + actionMap
 				+ ", type=" + type + "]";
 	}
 
@@ -91,5 +95,26 @@ public class Tile {
 
 	public int getReward() {
 		return reward;
+	}
+
+	public Action getAction(Direction direction) {
+		return actionMap.get(direction);
+	}
+
+	public void printC() {
+		if (type == TileType.EMPTY) {
+			System.out.printf("{[X%d][Y%d]Q("+ getMaxQValue().getDirection() +")(%+06.2f)} ",
+					position.getX(), position.getY(),getMaxQValue().getQValue());
+		} else if (type == TileType.CLIFF) {
+			System.out.printf("{[--------CLIFF---------]} ");
+		} else if (type == TileType.START) {
+			System.out.printf("{[X%d][Y%d]Q("+ getMaxQValue().getDirection() +")(%+06.2f)} ",
+					position.getX(), position.getY(), getMaxQValue().getQValue());
+		} else if (type == TileType.END) {
+			System.out.printf("{[----------END---------]} ");
+		} else {
+			System.out.println("ERROR: No Tile Type.");
+		}
+		
 	}
 }

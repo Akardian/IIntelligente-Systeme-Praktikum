@@ -16,9 +16,9 @@ public class Turn {
 		Direction direction;
 		
 		if(directionX == 1 && directionY == 0) {
-			direction = Direction.WEST;
+			direction = Direction.WEST_;
 		} else if(directionX == -1 && directionY == 0) {
-			direction = Direction.EAST;
+			direction = Direction.EAST_;
 		} else if(directionX == 0 && directionY == 1) {
 			direction = Direction.NORTH;
 		}else if(directionX == 0 && directionY == -1) {
@@ -37,12 +37,12 @@ public class Turn {
 		Position position;
 		
 		if(direction == Direction.NORTH) { //Move East
-			position = oldPosition.move(Direction.EAST);
-		} else if(direction == Direction.EAST) { //Move South
+			position = oldPosition.move(Direction.EAST_);
+		} else if(direction == Direction.EAST_) { //Move South
 			position = oldPosition.move(Direction.SOUTH);
 		} else if(direction == Direction.SOUTH) { //Move West
-			position = oldPosition.move(Direction.WEST);
-		}else if(direction == Direction.WEST) { //Move North
+			position = oldPosition.move(Direction.WEST_);
+		}else if(direction == Direction.WEST_) { //Move North
 			position = oldPosition.move(Direction.NORTH);
 		} else {
 			position = null;
@@ -58,12 +58,12 @@ public class Turn {
 		Position position;
 		
 		if(direction == Direction.NORTH) {// Move West
-			position = oldPosition.move(Direction.WEST);
-		} else if(direction == Direction.EAST) {//Move North
+			position = oldPosition.move(Direction.WEST_);
+		} else if(direction == Direction.EAST_) {//Move North
 			position = oldPosition.move(Direction.NORTH);
 		} else if(direction == Direction.SOUTH) {//Move East
-			position = oldPosition.move(Direction.EAST);
-		}else if(direction == Direction.WEST) {//Move South
+			position = oldPosition.move(Direction.EAST_);
+		}else if(direction == Direction.WEST_) {//Move South
 			position = oldPosition.move(Direction.SOUTH);
 		} else {
 			position = null;
@@ -80,12 +80,12 @@ public class Turn {
 		
 		if(direction == Direction.NORTH) {// Move South
 			position = oldPosition.move(Direction.SOUTH);
-		} else if(direction == Direction.EAST) {//Move West
-			position = oldPosition.move(Direction.WEST);
+		} else if(direction == Direction.EAST_) {//Move West
+			position = oldPosition.move(Direction.WEST_);
 		} else if(direction == Direction.SOUTH) {//Move North
 			position = oldPosition.move(Direction.NORTH);
-		}else if(direction == Direction.WEST) {//Move East
-			position = oldPosition.move(Direction.EAST);
+		}else if(direction == Direction.WEST_) {//Move East
+			position = oldPosition.move(Direction.EAST_);
 		} else {
 			position = null;
 			System.out.println("ERROR: right()");
