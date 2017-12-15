@@ -1,35 +1,46 @@
 package environment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
+
+import enums.Direction;
+import enums.TileType;
 
 public class Tile {
 
 	private final String name;
-	private final Position position;
 	private final int reward;
 
-	private Map<Direction, Action> actionMap;
-	private TileType type;
+	private final State position;
+	private final TileType type;
+
+	private Map<Direction, QValue> actionMap;
 
 	public Tile(int x, int y, TileType type, int reward) {
-		position = new Position(x, y);
+		position = new State(x, y);
 		this.type = type;
 		this.reward = reward;
 
 		name = "Tile_X" + x + "_Y" + y;
 
 		actionMap = new HashMap<>();
-		actionMap.put(Direction.NORTH, new Action(Direction.NORTH));
-		actionMap.put(Direction.EAST_, new Action(Direction.EAST_));
-		actionMap.put(Direction.SOUTH, new Action(Direction.SOUTH));
-		actionMap.put(Direction.WEST_, new Action(Direction.WEST_));
+		actionMap.put(Direction.NORTH, new QValue(Direction.NORTH, position));
+		actionMap.put(Direction.EAST_, new QValue(Direction.EAST_, position));
+		actionMap.put(Direction.SOUTH, new QValue(Direction.SOUTH, position));
+		actionMap.put(Direction.WEST_, new QValue(Direction.WEST_, position));
 	}
 
-	public Action getMaxQValue() {
-		Action maxQValue = null;
-		for (Entry<Direction, Action> entry : actionMap.entrySet()) {
+	/**
+	 * Search for Max QValue
+	 * 
+	 * @return QValue
+	 */
+	public QValue getMaxQValue() {
+		QValue maxQValue = null;
+		for (Entry<Direction, QValue> entry : actionMap.entrySet()) {
 			if (maxQValue == null) {
 				maxQValue = entry.getValue();
 			} else if (entry.getValue().getQValue() > maxQValue.getQValue()) {
@@ -39,54 +50,20 @@ public class Tile {
 		return maxQValue;
 	}
 
+	/**
+	 * Search for Random QValue
+	 * 
+	 * @return
+	 */
+	public QValue getRadomQValue() {
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(actionMap.size());
+
+		return new ArrayList<QValue>(actionMap.values()).get(randomInt);
+	}
+
 	public void setQValue(Direction direction, double qValue) {
 		actionMap.get(direction).setQValue(qValue);
-	}
-
-	public void print() {
-		if (type == TileType.EMPTY) {
-			System.out.printf("{[O][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
-					position.getX(), position.getY(),
-					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
-					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
-		} else if (type == TileType.CLIFF) {
-			System.out.printf("[(O)---------------------CLIFF------------------] ");
-		} else if (type == TileType.START) {
-			System.out.printf("{[O][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
-					position.getX(), position.getY(),
-					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
-					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
-		} else if (type == TileType.END) {
-			System.out.printf("[(O)----------------------END-------------------] ");
-		} else {
-			System.out.println("ERROR: No Tile Type.");
-		}
-	}
-
-	public void printf() {
-		if (type == TileType.EMPTY) {
-			System.out.printf("{[X][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
-					position.getX(), position.getY(),
-					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
-					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
-		} else if (type == TileType.CLIFF) {
-			System.out.printf("[(X)---------------------CLIFF------------------] ");
-		} else if (type == TileType.START) {
-			System.out.printf("{[X][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ",
-					position.getX(), position.getY(),
-					actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
-					actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
-		} else if (type == TileType.END) {
-			System.out.printf("[(X)----------------------END-------------------] ");
-		} else {
-			System.out.println("ERROR: No Tile Type.");
-		}
-	}
-
-	@Override
-	public String toString() {
-		return "Tile [name=" + name + ", position=" + position + ", reward=" + reward + ", actionList=" + actionMap
-				+ ", type=" + type + "]";
 	}
 
 	public TileType getType() {
@@ -97,24 +74,91 @@ public class Tile {
 		return reward;
 	}
 
-	public Action getAction(Direction direction) {
+	public QValue getAction(Direction direction) {
 		return actionMap.get(direction);
 	}
 
-	public void printC() {
+	@Override
+	public String toString() {
+		return "Tile [name=" + name + ", position=" + position + ", reward=" + reward + ", actionList=" + actionMap
+				+ ", type=" + type + "]";
+	}
+
+	private void printString() {
+		System.out.printf("{[O][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ", position.getX(), position.getY(),
+				actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+				actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
+	}
+
+	private void printfString() {
+		System.out.printf("{[X][X%d][Y%d]N(%+06.2f)E(%+06.2f)S(%+06.2f)W(%+06.2f)} ", position.getX(), position.getY(),
+				actionMap.get(Direction.NORTH).getQValue(), actionMap.get(Direction.EAST_).getQValue(),
+				actionMap.get(Direction.SOUTH).getQValue(), actionMap.get(Direction.WEST_).getQValue());
+	}
+
+	private void printStringPolicy() {
+		System.out.printf("{[O][X%d][Y%d]Q(" + getMaxQValue().getAction() + ")} ", position.getX(), position.getY(),
+				getMaxQValue().getQValue());
+	}
+
+	private void printfStringPolicy() {
+		System.out.printf("{[X][X%d][Y%d]Q(" + getMaxQValue().getAction() + ")} ", position.getX(), position.getY(),
+				getMaxQValue().getQValue());
+	}
+
+	public void printPolicy() {
 		if (type == TileType.EMPTY) {
-			System.out.printf("{[X%d][Y%d]Q("+ getMaxQValue().getDirection() +")(%+06.2f)} ",
-					position.getX(), position.getY(),getMaxQValue().getQValue());
+			printStringPolicy();
 		} else if (type == TileType.CLIFF) {
-			System.out.printf("{[--------CLIFF---------]} ");
+			System.out.printf("{[----CLIFF-----]} ");
 		} else if (type == TileType.START) {
-			System.out.printf("{[X%d][Y%d]Q("+ getMaxQValue().getDirection() +")(%+06.2f)} ",
-					position.getX(), position.getY(), getMaxQValue().getQValue());
+			printStringPolicy();
 		} else if (type == TileType.END) {
-			System.out.printf("{[----------END---------]} ");
+			System.out.printf("{[------END-----]} ");
 		} else {
 			System.out.println("ERROR: No Tile Type.");
 		}
-		
+	}
+
+	public void printfPolicy() {
+		if (type == TileType.EMPTY) {
+			printfStringPolicy();
+		} else if (type == TileType.CLIFF) {
+			System.out.printf("{[----CLIFF-----]} ");
+		} else if (type == TileType.START) {
+			printfStringPolicy();
+		} else if (type == TileType.END) {
+			System.out.printf("{[------END-----]} ");
+		} else {
+			System.out.println("ERROR: No Tile Type.");
+		}
+	}
+
+	public void print() {
+		if (type == TileType.EMPTY) {
+			printString();
+		} else if (type == TileType.CLIFF) {
+			System.out.printf("[(O)---------------------CLIFF------------------] ");
+		} else if (type == TileType.START) {
+			printString();
+		} else if (type == TileType.END) {
+			System.out.printf("[(O)----------------------END-------------------] ");
+		} else {
+			System.out.println("ERROR: No Tile Type.");
+		}
+	}
+
+	public void printf() {
+		if (type == TileType.EMPTY) {
+			printfString();
+		} else if (type == TileType.CLIFF) {
+			System.out.printf("[(X)---------------------CLIFF------------------] ");
+		} else if (type == TileType.START) {
+			printfString();
+		} else if (type == TileType.END) {
+			System.out.printf("[(X)----------------------END-------------------] ");
+		} else {
+			System.out.println("ERROR: No Tile Type.");
+		}
 	}
 }

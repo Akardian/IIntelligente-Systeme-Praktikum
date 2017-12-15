@@ -1,10 +1,12 @@
 package environment;
 
-public class Action {
+import enums.Direction;
+
+public class QValue {
 	private double QValue;	
 	private final Direction action;
 	
-	public Action(Direction action) {
+	public QValue(Direction action, State state) {
 		this.action = action;
 		QValue = 0;
 	}
@@ -17,7 +19,7 @@ public class Action {
 		QValue = qValue;
 	}
 
-	public Direction getDirection() {
+	public Direction getAction() {
 		return action;
 	}
 	

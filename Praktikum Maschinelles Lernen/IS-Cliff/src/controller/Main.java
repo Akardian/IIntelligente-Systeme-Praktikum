@@ -3,52 +3,84 @@ package controller;
 import java.util.Scanner;
 
 import agent.Agent;
-import environment.Direction;
-import exceptions.MoveToFar;
+import agent.QLearningAgent;
+import agent.SarsaAgent;
+import enums.Direction;
 import exceptions.WorldToSmall;
 
 public class Main {
 
 	@SuppressWarnings("resource")
-	public static void main(String[] args) throws MoveToFar {
+	public static void main(String[] args) {
 		try {
-			Agent agent = new Agent();
+			Scanner reader = new Scanner(System.in); // Reading from System.in
+			
+			System.out.println("Enter 'q' for Q-Learnign else SARSA");
+			String n = reader.nextLine(); // Scans the next token of the input as an int.
+			Agent agent;
+			if(n.equals("q")) {
+				agent = new QLearningAgent();
+			} else {
+				agent = new SarsaAgent();
+			}
 			agent.print();
 
-			Scanner reader = new Scanner(System.in); // Reading from System.in
 			boolean exit = false;
-			boolean printc = false;
+			boolean printPolicy = false;
 			do {
-				String n = reader.nextLine(); // Scans the next token of the input as an int.
+				n = reader.nextLine(); // Scans the next token of the input as an int.
+				int reward = 0;
 				switch (n) {
 				case "w":
-					agent.qLearningMan(Direction.NORTH);
+					reward = agent.doMan(Direction.NORTH);
+					System.out.println("Reward: " + reward);
 					break;
 				case "a":
-					agent.qLearningMan(Direction.WEST_);
+					reward = agent.doMan(Direction.WEST_);
+					System.out.println("Reward: " + reward);
 					break;
 				case "s":
-					agent.qLearningMan(Direction.SOUTH);
+					reward = agent.doMan(Direction.SOUTH);
+					System.out.println("Reward: " + reward);
 					break;
 				case "d":
-					agent.qLearningMan(Direction.EAST_);
+					reward = agent.doMan(Direction.EAST_);
+					System.out.println("Reward: " + reward);
 					break;
 				case "q":
-					agent.qLearningStep();
+					reward = agent.doStep();
+					System.out.println("Reward: " + reward);
 					break;
 				case "e":
-					agent.qLearningEpisode();
+					reward = agent.episode();
+					System.out.println("Reward: " + reward);
 					break;
 				case "1":
-					printc = false;
+					printPolicy = false;
 					break;
 				case "2":
-					printc = true;
+					printPolicy = true;
 					break;
 				case "r":
-					for(int i = 0 ; i < 1000; i++) {
-						agent.qLearningEpisode();
+					for(int i = 0 ; i < 500; i++) {
+						reward += agent.episode();
 					}
+					reward = reward / 500;
+					System.out.println("Reward: " + reward);
+					break;
+				case "r50":
+					for(int i = 0 ; i < 50; i++) {
+						reward += agent.episode();
+					}
+					reward = reward / 50;
+					System.out.println("Reward: " + reward);
+					break;
+				case "r10":
+					for(int i = 0 ; i < 10; i++) {
+						reward += agent.episode();
+					}
+					reward = reward / 10;
+					System.out.println("Reward: " + reward);
 					break;
 				case "t":
 					exit = true;
@@ -57,7 +89,7 @@ public class Main {
 					break;
 				}
 				
-				if(printc) {
+				if(printPolicy) {
 					agent.printC();
 				} else {
 					agent.print();
@@ -65,7 +97,6 @@ public class Main {
 			} while (!exit);
 			
 		} catch (WorldToSmall e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

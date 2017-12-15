@@ -1,10 +1,12 @@
 package environment;
 
+import enums.Direction;
+
 public class Turn {
-	Position oldPosition;
-	Position newPosition;
+	State oldPosition;
+	State newPosition;
 	
-	public Turn(Position oldPosition, Position newPosition) {
+	public Turn(State oldPosition, State newPosition) {
 		this.oldPosition = oldPosition;
 		this.newPosition = newPosition;
 	}
@@ -31,10 +33,10 @@ public class Turn {
 		return direction;
 	}
 	
-	public Position right() {
+	public State right() {
 		Direction direction = direction();
 		
-		Position position;
+		State position;
 		
 		if(direction == Direction.NORTH) { //Move East
 			position = oldPosition.move(Direction.EAST_);
@@ -52,10 +54,10 @@ public class Turn {
 		return position;
 	}
 	
-	public Position left() {
+	public State left() {
 		Direction direction = direction();
 		
-		Position position;
+		State position;
 		
 		if(direction == Direction.NORTH) {// Move West
 			position = oldPosition.move(Direction.WEST_);
@@ -73,10 +75,10 @@ public class Turn {
 		return position;
 	}
 	
-	public Position backwards() {
+	public State backwards() {
 		Direction direction = direction();
 		
-		Position position;
+		State position;
 		
 		if(direction == Direction.NORTH) {// Move South
 			position = oldPosition.move(Direction.SOUTH);
