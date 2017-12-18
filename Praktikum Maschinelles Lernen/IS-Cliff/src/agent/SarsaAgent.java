@@ -16,6 +16,7 @@ public class SarsaAgent extends Agent{
 	public int episode() {
 		int reward = 0;
 		boolean terminate = false;
+		changedQValue = false;
 		QValue action1 = chooseAction(state);
 		do {
 			action1 = calcStep(action1);
@@ -23,6 +24,9 @@ public class SarsaAgent extends Agent{
 			terminate = endEpisode();
 		} while (!terminate);
 
+		if(!changedQValue) {
+			reward = 0;
+		}
 		return reward;
 	}
 
@@ -55,6 +59,9 @@ public class SarsaAgent extends Agent{
 		double newQValue = action1.getQValue()
 				+ learningRate * (reward + discountFactor * action2.getQValue() - action1.getQValue());
 
+		if(action1.getQValue() != newQValue) {
+			changedQValue = true;
+		}
 		action1.setQValue(newQValue);
 		state = newState;
 		return action2;

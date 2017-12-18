@@ -18,19 +18,21 @@ public abstract class Agent {
 	int moveReward;
 	int episodeReward;
 
+	boolean changedQValue = false;
+	
 	final double eGreedy;
 	final double learningRate;
 	final double discountFactor;
 
 	public Agent() throws WorldToSmall {
-		world = new World(5, 4);
+		world = new World(5, 6);
 
 		this.moveReward = -1;
 		episodeReward = 0;
 		state = new State(0, 4 - 1);
 
-		learningRate = 0.2;
-		discountFactor = 0.8;
+		learningRate = 0.4;
+		discountFactor = 0.95;
 		eGreedy = 0.1;
 
 		startState = new State(0, 3);
@@ -74,5 +76,5 @@ public abstract class Agent {
 	public void printC() {
 		world.printPolicy(state);
 
-	}
+	} 
 }

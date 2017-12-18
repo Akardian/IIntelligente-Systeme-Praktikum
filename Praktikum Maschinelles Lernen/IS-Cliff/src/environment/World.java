@@ -25,7 +25,7 @@ public class World {
 			tile[achseX - 1][achseY - 1] = new Tile(achseX - 1, achseY - 1, TileType.END, 0);
 
 			for (int i = 1; i < achseX - 1; i++) {
-				tile[i][achseY - 1] = new Tile(i, achseY - 1, TileType.CLIFF, -100);
+				tile[i][achseY - 1] = new Tile(i, achseY - 1, TileType.CLIFF, -10000);
 			}
 
 			for (int i = 0; i < achseX; i++) {

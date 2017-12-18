@@ -31,6 +31,7 @@ public class QLearningAgent extends Agent {
 
 	@Override
 	public int episode() {
+		changedQValue = false;
 		int reward = 0;
 		boolean terminate = false;
 		do {
@@ -39,6 +40,9 @@ public class QLearningAgent extends Agent {
 			terminate = endEpisode();
 		} while (!terminate);
 
+		if(!changedQValue) {
+			reward = 0;
+		}
 		return reward;
 	}
 
@@ -53,6 +57,9 @@ public class QLearningAgent extends Agent {
 		double newQValue = qValue1.getQValue()
 				+ learningRate * (reward + discountFactor * qValue2.getQValue() - qValue1.getQValue());
 
+		if(qValue1.getQValue() != newQValue) {
+			changedQValue = true;
+		}
 		qValue1.setQValue(newQValue);
 		state = newState;
 	}
