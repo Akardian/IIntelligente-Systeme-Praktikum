@@ -62,7 +62,7 @@ public abstract class Agent {
 		} else if (world.getTile(state).getType() == TileType.CLIFF) {
 			// terminate = true;
 			state = startState;
-			episodeReward = 0;
+			//episodeReward = 0;
 		}
 		return terminate;
 	}

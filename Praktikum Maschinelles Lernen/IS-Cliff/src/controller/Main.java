@@ -62,10 +62,10 @@ public class Main {
 					printPolicy = true;
 					break;
 				case "r":
-					for(int i = 0 ; i < 500; i++) {
+					for(int i = 0 ; i < 1000; i++) {
 						reward += agent.episode();
 					}
-					reward = reward / 500;
+					reward = reward / 1000;
 					System.out.println("Reward: " + reward);
 					break;
 				case "r50":
