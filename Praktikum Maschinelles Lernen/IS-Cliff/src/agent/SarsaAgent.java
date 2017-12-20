@@ -59,10 +59,10 @@ public class SarsaAgent extends Agent{
 		double newQValue = action1.getQValue()
 				+ learningRate * (reward + discountFactor * action2.getQValue() - action1.getQValue());
 
-		if(action1.getQValue() != newQValue) {
+		action1.setQValue(newQValue);
+		if(!world.getTile(state).getMaxQValue().equals(action1)) {
 			changedQValue = true;
 		}
-		action1.setQValue(newQValue);
 		state = newState;
 		return action2;
 	}

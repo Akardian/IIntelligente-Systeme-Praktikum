@@ -34,11 +34,11 @@ public class QLearningAgent extends Agent {
 		changedQValue = false;
 		int reward = 0;
 		boolean terminate = false;
-		do {
+		while (!terminate) {
 			calcStep(chooseAction(state));
 			reward = episodeReward;
 			terminate = endEpisode();
-		} while (!terminate);
+		}
 
 		if(!changedQValue) {
 			reward = 0;
@@ -56,11 +56,10 @@ public class QLearningAgent extends Agent {
 
 		double newQValue = qValue1.getQValue()
 				+ learningRate * (reward + discountFactor * qValue2.getQValue() - qValue1.getQValue());
-
-		if(qValue1.getQValue() != newQValue) {
+		qValue1.setQValue(newQValue);
+		if(!world.getTile(state).getMaxQValue().equals(qValue1)) {
 			changedQValue = true;
 		}
-		qValue1.setQValue(newQValue);
 		state = newState;
 	}
 }
