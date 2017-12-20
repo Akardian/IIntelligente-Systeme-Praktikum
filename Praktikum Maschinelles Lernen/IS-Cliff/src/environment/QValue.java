@@ -27,4 +27,25 @@ public class QValue {
 	public String toString() {
 		return "Action [QValue=" + QValue + ", action=" + action + "]";
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof QValue)) return false;
+
+		QValue qValue = (QValue) o;
+
+		if (Double.compare(qValue.QValue, QValue) != 0) return false;
+		return action == qValue.action;
+	}
+
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		temp = Double.doubleToLongBits(QValue);
+		result = (int) (temp ^ (temp >>> 32));
+		result = 31 * result + (action != null ? action.hashCode() : 0);
+		return result;
+	}
 }
