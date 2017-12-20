@@ -11,7 +11,6 @@ public class QLearningAgent extends Agent {
 		super();
 	}
 
-	@Override
 	public int doMan(Direction direction) {
 		calcStep(world.getTile(state).getAction(direction));
 		int reward = episodeReward;

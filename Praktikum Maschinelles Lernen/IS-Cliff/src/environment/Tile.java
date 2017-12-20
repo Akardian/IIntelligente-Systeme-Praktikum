@@ -55,23 +55,27 @@ public class Tile {
 	 * 
 	 * @return
 	 */
-		public QValue getRadomQValue() {
-	Random randomGenerator = new Random();
+	public QValue getRadomQValue() {
+		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(actionMap.size());
 		QValue result = null;
-		switch(randomInt) {
-		case 0: result= actionMap.get(Direction.NORTH);
-		break;
-		case 1: result= actionMap.get(Direction.SOUTH);
-		break;
-		case 2: result= actionMap.get(Direction.WEST_);
-		break;
-		case 3: result= actionMap.get(Direction.EAST_);
-		break;
+		switch (randomInt) {
+		case 0:
+			result = actionMap.get(Direction.NORTH);
+			break;
+		case 1:
+			result = actionMap.get(Direction.SOUTH);
+			break;
+		case 2:
+			result = actionMap.get(Direction.WEST_);
+			break;
+		case 3:
+			result = actionMap.get(Direction.EAST_);
+			break;
 
 		}
 		return result;
-		//return new ArrayList<QValue>(actionMap.values()).get(randomInt);
+		// return new ArrayList<QValue>(actionMap.values()).get(randomInt);
 	}
 
 	public void setQValue(Direction direction, double qValue) {

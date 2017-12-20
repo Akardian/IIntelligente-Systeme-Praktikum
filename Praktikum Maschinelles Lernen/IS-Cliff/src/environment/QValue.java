@@ -28,7 +28,6 @@ public class QValue {
 		return "Action [QValue=" + QValue + ", action=" + action + "]";
 	}
 
-	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof QValue)) return false;
@@ -41,11 +40,12 @@ public class QValue {
 
 	@Override
 	public int hashCode() {
-		int result;
+		final int prime = 31;
+		int result = 1;
 		long temp;
 		temp = Double.doubleToLongBits(QValue);
-		result = (int) (temp ^ (temp >>> 32));
-		result = 31 * result + (action != null ? action.hashCode() : 0);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((action == null) ? 0 : action.hashCode());
 		return result;
 	}
 }

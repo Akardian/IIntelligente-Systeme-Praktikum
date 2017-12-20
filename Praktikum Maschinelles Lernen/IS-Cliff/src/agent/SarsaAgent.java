@@ -1,13 +1,12 @@
 package agent;
 
-import enums.Direction;
 import environment.QValue;
 import environment.State;
 import exceptions.WorldToSmall;
 
-public class SarsaAgent extends Agent{
+public class SarsaAgent extends Agent {
 	private QValue lastAction;
-	
+
 	public SarsaAgent() throws WorldToSmall {
 		super();
 	}
@@ -16,31 +15,21 @@ public class SarsaAgent extends Agent{
 	public int episode() {
 		int reward = 0;
 		boolean terminate = false;
-		changedQValue = false;
+
 		QValue action1 = chooseAction(state);
 		do {
 			action1 = calcStep(action1);
 			reward = episodeReward;
 			terminate = endEpisode();
 		} while (!terminate);
-
-		if(!changedQValue) {
-			reward = 0;
-		}
 		return reward;
 	}
 
 	@Override
-	public int doMan(Direction direction) {
-		System.out.println("No SARSA support");
-		return -1;
-	}
-
-	@Override
 	public int doStep() {
-		if(state.equals(startState)) {
+		if (state.equals(startState)) {
 			lastAction = chooseAction(state);
-		}		
+		}
 		lastAction = calcStep(lastAction);
 		int reward = episodeReward;
 		endEpisode();
@@ -56,13 +45,12 @@ public class SarsaAgent extends Agent{
 
 		QValue action2 = chooseAction(newState);
 
-		double newQValue = action1.getQValue()
-				+ learningRate * (reward + discountFactor * action2.getQValue() - action1.getQValue());
+		double qValue1 = action1.getQValue();
+		double qValue2 = action2.getQValue();
+		double newQValue = qValue1 + learningRate * (reward + discountFactor * qValue2 - qValue1);
 
 		action1.setQValue(newQValue);
-		if(!world.getTile(state).getMaxQValue().equals(action1)) {
-			changedQValue = true;
-		}
+
 		state = newState;
 		return action2;
 	}
