@@ -53,7 +53,7 @@ public class Main {
 					System.out.println("Reward: " + reward);
 					break;
 				case "x":
-					int batchsize = 200;
+					int batchsize = 1000;
 					int epoche = 0;
 					boolean changed = false;
 					do {
@@ -65,6 +65,26 @@ public class Main {
 						changed = agent.checkChange(policy);
 						epoche++;
 					} while (changed);
+					break;
+				case "y":
+					int batchsize1 = 1000;
+					int epoche1 = 0;
+					boolean changed1 = false;
+					do {
+						changed1 = false;
+						System.out.println("Epoche: " + epoche1);
+						Direction[][] policy = agent.cloneTileDirection();
+						for (int i = 0; i < batchsize1; i++) {
+							agent.episode();
+
+							if (agent.checkChange(policy) || changed1 == true) {
+								changed1 = true;
+							} else {
+								changed1 = false;
+							}
+						}
+						epoche1++;
+					} while (changed1);
 					break;
 				case "t":
 					exit = true;

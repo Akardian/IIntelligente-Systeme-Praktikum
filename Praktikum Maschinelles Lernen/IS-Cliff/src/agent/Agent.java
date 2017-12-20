@@ -38,7 +38,7 @@ public abstract class Agent {
 
 		learningRate = 0.2;
 		discountFactor = 0.95;
-		eGreedy = 0.1;
+		eGreedy = 0.2;
 
 		startState = new State(0, 3);
 	}
